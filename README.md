@@ -26,3 +26,9 @@ done: whether the next game state is a end state
 chance_node: whether the next game state is a chance state
 
 # How to run the code
+
+Behavior Cloning Algorithm: run the train_bc_policy.py file to get the behavior cloning policy by modifying the game and corresponding dataset in that file
+
+Model-based Algorithm: first run the train_env_model.py file to train the environment model by modifying the game and corresponding dataset in that file and then run OEF-CFR or OEF-PSRO algorithm to get the model-based policy based on the trained environment model
+
+OEF-CFR: run the 
