@@ -9,10 +9,10 @@ from absl import flags
 import torch.utils.data as Data
 from network.policy_network import BehaviorPolicyModel
 
-os.environ["CUDA_VISIBLE_DEVICES"] = "5"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 FLAGS = flags.FLAGS
-flags.DEFINE_integer("seed", 3, "Seed.")
+flags.DEFINE_integer("seed", 1, "Seed.")
 
 flags.DEFINE_string("game_name", "liars_dice", "Game name.")
 flags.DEFINE_integer("n_players", 2, "The number of players.")
@@ -20,7 +20,7 @@ flags.DEFINE_integer("numdice", 1, "The number of players.")
 
 # offline data location
 flags.DEFINE_string("mix_offline_data_location",
-                    "/home/kangjie/lsx/oef/oef_liars_dice/dataset/mix_offline_dataset",
+                    "dataset/mix_offline_dataset",
                     "offline data location")
 
 # record results location
@@ -150,13 +150,18 @@ def main(argv):
 
     # set seed
     setup_seed(FLAGS.seed)
-    # load game
+    # load liar's dice game
     game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players, "numdice": FLAGS.numdice, "dice_sides": 6})
+    # load poker game
+    # game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players})
+    # load phantom ttt game
+    # game = pyspiel.load_game(FLAGS.game_name, {"obstype": "reveal-nothing"})
+
     num_actions = game.num_distinct_actions()
     train(num_actions, 1, 3)
 
     # train policy model
-    for proportion in range(4, 11):
+    for proportion in range(11):
         for player in range(FLAGS.n_players):
             train(num_actions, player, proportion)
             print("Finish train player {} proportion {}".format(player, proportion))
