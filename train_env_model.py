@@ -1,6 +1,4 @@
 import torch
-# import sys
-# sys.path.append("/home/kangjie/lsx/oef/oef_kuhn_2")
 import random
 import pyspiel
 import numpy as np
@@ -10,7 +8,7 @@ from absl import flags
 import torch.utils.data as Data
 from network.env_model import EnvModel
 import os
-os.environ["CUDA_VISIBLE_DEVICES"] = "3"
+os.environ["CUDA_VISIBLE_DEVICES"] = "0"
 
 FLAGS = flags.FLAGS
 
@@ -24,7 +22,7 @@ flags.DEFINE_integer("seed", 1, "Seed.")
 
 # offline setting
 flags.DEFINE_string("mix_offline_data_location",
-                    "/home/kangjie/lsx/oef/oef_liars_dice/dataset/mix_offline_dataset",
+                    "dataset/mix_offline_dataset",
                     "offline data location")
 # record results location
 flags.DEFINE_string("result_data_location", "mix_offline_dataset_trained_env_model", "dataset class")
@@ -54,7 +52,6 @@ def get_result_dir(epoch, proportion):
                FLAGS.learning_rate, epoch + 1, FLAGS.batch_size)
 
     return osp.join(result_dir, model_name)
-
 
 # current_info_state, player_id, legal_actions, action, next_info_state, next_legal_actions,
 # next_player, reward, done, chance_node
@@ -164,11 +161,15 @@ def main(argv):
 
     # set seed
     setup_seed(FLAGS.seed)
-    # load game
+    # load liar's dice game
     game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players, "numdice": FLAGS.numdice, "dice_sides": 6})
+    # load poker game
+    # game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players})
+    # load phantom ttt game
+    # game = pyspiel.load_game(FLAGS.game_name, {"obstype": "reveal-nothing"})
+    
     state = game.new_initial_state()
     chance_action = len(state.chance_outcomes())
-
     num_actions = max(game.num_distinct_actions(), chance_action)
 
     # train env model
