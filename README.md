@@ -3,7 +3,7 @@ Repository for the submission of NeurIPS Datasets and Benchmarks Track 2022.
 
 # Dataset
 
-The dataset in this repository includes three types of datasets for every game: random dataset, expert dataset and learning dataset. All dataset are avaiable at https://drive.google.com/drive/folders/1Y4hnkQ8hk2b81lbMaYWu26WTEF3L75FM?usp=sharing. The data entry in dataset is [current_game_state, player_id, legal_actions, action, next_game_state, next_legal_actions, next_player, reward, done, chance_node]. 
+The dataset in this repository includes three types of datasets for every game: random dataset, expert dataset and learning dataset. All dataset used in this work are avaiable at https://drive.google.com/drive/folders/1Y4hnkQ8hk2b81lbMaYWu26WTEF3L75FM?usp=sharing. The data entry in dataset is [current_game_state, player_id, legal_actions, action, next_game_state, next_legal_actions, next_player, reward, done, chance_node]. 
 
 - current_game_state: a list of every player's infomation state list
 - player_id: the player should take actions at curretn game state
@@ -16,6 +16,7 @@ The dataset in this repository includes three types of datasets for every game: 
 - done: whether the next game state is a end state
 - chance_node: whether the next game state is a chance state
 
+We also provide the code used to generate dataset in generate_dataset folder, therefore, the offline dataset of other games can be get using the code.
 # How to run the code
 - Create a virtual python environment
 - Install the requirement packages in the `requirements.txt`
