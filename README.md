@@ -24,3 +24,5 @@ reward: the rewards of every player of next game state
 done: whether the next game state is a end state
 
 chance_node: whether the next game state is a chance state
+
+# How to run the code
