@@ -23,5 +23,5 @@ We also provide the code used to generate dataset in **generate_dataset** folder
 - **Behavior Cloning Algorithm**: run the `train_bc_policy.py` file to get the behavior cloning policy by modifying the game and corresponding dataset in that file
 - **Model-based Algorithm**: first run the `train_env_model.py` file to train the environment model by modifying the game and corresponding dataset in that file and then run OEF-CFR or OEF-PSRO algorithm to get the model-based policy based on the trained environment model
 - **OEF-CFR**: run the `run_mb_deep_cfr.py` file in the **oef_cfr** folder to run OEF-CFR algorithm on the trained environment model
-- **OEF-CFR**: run the `run_mb_psro.py file` in the **oef_psro** folder to run OEF-PSRO algorithm on the trained environment model
-
+- **OEF-CFR**: run the `run_mb_psro.py` file in the **oef_psro** folder to run OEF-PSRO algorithm on the trained environment model
+- **BC+MB**: run the `combine_bc_mb.py` file to find proper weights for the behavior cloning policy and the model-based policy to get a best combination policy.
