@@ -1,5 +1,4 @@
 import os
-import sys
 import time
 import torch
 import random
@@ -14,7 +13,6 @@ from open_spiel.python import rl_environment
 from open_spiel.python.algorithms import exploitability
 from open_spiel.python.algorithms import policy_aggregator
 from open_spiel.python.algorithms.psro_v2 import strategy_selectors
-sys.path.append("/home/kangjie/lsx/oef/oef_leduc_final")
 import mb_psro as psro_v2
 import mb_psro_rl_oracle as rl_oracle
 import torch_rl_policy as rl_policy
@@ -63,7 +61,7 @@ flags.DEFINE_integer("update_target_network_every", 1000, "Update target network
 
 flags.DEFINE_bool("use_round", True, "env model whether use round to normalize state")
 flags.DEFINE_bool("use_deterministic", True, "Re-init value net on each CFR iter")
-flags.DEFINE_string("env_model_location", "/home/kangjie/lsx/oef/oef_leduc_final/mix_offline_dataset_trained_env_model/", "location of env model")
+flags.DEFINE_string("env_model_location", "mix_offline_dataset_trained_env_model/", "location of env model")
 flags.DEFINE_string("env_model_file", "game_leduc_poker_players_3_hidden_layer_128_buffer_{}_lr_0.05_train_epoch_{}_batch_size_128.pkl", "location of env model")
 flags.DEFINE_integer("replay_buffer", 50000, "env model replay buffer")
 flags.DEFINE_integer("train_epoch", 10000, "env model replay buffer")
