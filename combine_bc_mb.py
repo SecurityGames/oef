@@ -81,8 +81,13 @@ def main(argv):
     # set seed
     setup_seed(FLAGS.seed)
 
-    # load game
+    # load liar's dice game
+    # game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players, "numdice": FLAGS.numdice, "dice_sides": 6})
+    # load poker game
     game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players})
+    # load phantom ttt game
+    # game = pyspiel.load_game(FLAGS.game_name, {"obstype": "reveal-nothing"})
+    
     results = []
     min_weights = []
     for w in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
