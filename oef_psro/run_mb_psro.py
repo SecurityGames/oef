@@ -174,8 +174,12 @@ def main(argv):
 
     setup_seed(FLAGS.seed)
 
+    # load liar's dice game
+    # game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players, "numdice": FLAGS.numdice, "dice_sides": 6})
+    # load poker game
     game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players})
-    state = game.new_initial_state()
+    # load phantom ttt game
+    # game = pyspiel.load_game(FLAGS.game_name, {"obstype": "reveal-nothing"})    state = game.new_initial_state()
     chance_action = len(state.chance_outcomes())
     num_actions = max(game.num_distinct_actions(), chance_action)
 
