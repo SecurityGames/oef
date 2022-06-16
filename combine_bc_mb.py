@@ -22,12 +22,12 @@ flags.DEFINE_string("game_name", "kuhn_poker", "Game name.")
 flags.DEFINE_integer("n_players", 4, "The number of players.")
 
 # Behavior Clone Strategy Location
-flags.DEFINE_string("bc_policy_location", "/home/kangjie/lsx/oef/oef_kuhn_final/mix_offline_dataset_behavior_clone_policy/", "offline data location")
+flags.DEFINE_string("bc_policy_location", "mix_offline_dataset_behavior_clone_policy/", "offline data location")
 flags.DEFINE_string("bc_policy_file_name",
                     "/seed_1_game_kuhn_poker_players_4_hidden_layer_64_buffer_10000_lr_0.05_train_epoch_5000_batch_size_128_policy.pkl",
                     "Behavior Clone Strategy Location")
 
-flags.DEFINE_string("mb_policy_location", "/home/kangjie/lsx/oef/oef_kuhn_final/mb_deep_cfr/mb_method_results/mb_deep_cfr_train_policy/", "offline data location")
+flags.DEFINE_string("mb_policy_location", "mb_deep_cfr/mb_method_results/mb_deep_cfr_train_policy/", "offline data location")
 flags.DEFINE_string("mb_policy_file_name",
                     "/policy_train_data_10000_train_epoch_5000_proportion_10_conv_0.6931734493672149.pkl",
                     "Behavior Clone Strategy Location")
@@ -84,8 +84,7 @@ def main(argv):
     # load game
     game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players})
     results = []
-
-    # for proportion in range(11):
+    min_weights = []
     for w in [0, 0.1, 0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9, 1.0]:
         conv_list = []
         policy_list = []
@@ -104,11 +103,11 @@ def main(argv):
         conv_list.append(conv)
 
         results.append(min(conv_list))
-        # print(conv_list)
+        min_weights.append(weights_list[conv_list.index(min(conv_list))])
         print(conv)
 
     print(results)
-    torch.save(results, get_result_dir())
+    torch.save([results, min_weights], get_result_dir())
 
 
 if __name__ == "__main__":
