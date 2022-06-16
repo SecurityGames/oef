@@ -7,8 +7,7 @@ from absl import app
 import os.path as osp
 from absl import flags
 from utils import policy_wrapper
-import sys
-sys.path.append("/home/kangjie/lsx/offline_learning/Dataset_Generator/expert_policy_generator")
+
 os.environ["CUDA_VISIBLE_DEVICES"] = "1"
 
 
@@ -29,7 +28,7 @@ flags.DEFINE_string("data_type", "expert_data_cfr", "Type of data: random_data, 
 flags.DEFINE_string("result_folder", "expert_dataset", "Type of data: random_dataset, expert_dataset")
 flags.DEFINE_float("exploitability", 0.06620497528357955, "the location of trained expert policy")
 flags.DEFINE_string("expert_policy_location",
-                    "/home/shuxinli/python_project/offline/Dataset_Generator/expert_policy_generator/expert_policy/cfr/leduc_poker_3_players/train_950_iterations_nash_conv_0.06620497528357955.pth",
+                    "expert_policy_generator/expert_policy/cfr/leduc_poker_3_players/train_1000_iterations_nash_conv_0.06620497528357955.pth",
                     "the location of trained expert policy")
 
 flags.DEFINE_string("device", "cuda", "device")
@@ -45,9 +44,8 @@ def get_result_dir():
         os.makedirs(result_dir)
 
     buffer_name = "seed_{}_{}_players_{}_episode_{}".format(FLAGS.seed, FLAGS.game_name, FLAGS.n_players, FLAGS.num_episode)
-    if FLAGS.data_type == "random_data":
-        buffer_name += ".pth"
-    elif FLAGS.data_type == "expert_data_deep_cfr":
+
+    if FLAGS.data_type == "expert_data_deep_cfr":
         buffer_name += "_deep_cfr_exploi_{}.pth".format(FLAGS.exploitability)
     elif FLAGS.data_type == "expert_data_psro":
         buffer_name += "_psro_exploi_{}.pth".format(FLAGS.exploitability)
@@ -108,16 +106,13 @@ def main(argv):
         raise app.UsageError("Too many command-line arguments.")
 
     set_seed_all(FLAGS.seed)
-    # "obstype": "reveal-numturns"/"reveal-nothing"
+
     game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players})
     # game = pyspiel.load_game(FLAGS.game_name, {"obstype": "reveal-nothing"})
     # game = pyspiel.load_game(FLAGS.game_name, {"dice_sides": 6, "numdice": FLAGS.numdice, "players": FLAGS.n_players})
 
     num_actions = game.num_distinct_actions()
-    policy = None
 
-    if FLAGS.data_type == "random_data":
-        policy = policy_wrapper.random_policy(num_actions)
     if FLAGS.data_type == "expert_data_deep_cfr":
         policy_network = torch.load(FLAGS.expert_policy_location)
         policy = policy_wrapper.deep_cfr_policy(policy_network, FLAGS.device)
