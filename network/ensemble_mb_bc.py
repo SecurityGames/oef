@@ -12,6 +12,5 @@ class mix_policy:
         y_2 = self.mb_model.step(state, legal_actions)
 
         strategy = self.bc_weight * y_1 + (1 - self.bc_weight) * y_2
-        # strategy = torch.softmax(strategy, dim=1)
         strategy /= strategy.sum()
         return strategy
