@@ -16,8 +16,6 @@ from open_spiel.python import policy
 from open_spiel.python.algorithms import exploitability
 from open_spiel.python import rl_environment
 from open_spiel.python.rl_environment import TimeStep, StepType
-import sys
-sys.path.append("/home/kangjie/lsx/oef/oef_kuhn_final")
 import mb_deep_cfr_oracle as deep_cfr
 from network.env_model import DynamicModel
 import os.path as osp
@@ -48,7 +46,7 @@ flags.DEFINE_integer("advantage_network_train_steps", 100, "training steps per i
 
 flags.DEFINE_bool("use_round", True, "env model whether use round to normalize state")
 flags.DEFINE_bool("use_deterministic", True, "Re-init value net on each CFR iter")
-flags.DEFINE_string("env_model_location", "/home/kangjie/lsx/oef/oef_kuhn_final/mix_offline_dataset_trained_env_model/", "location of env model")
+flags.DEFINE_string("env_model_location", "mix_offline_dataset_trained_env_model/", "location of env model")
 flags.DEFINE_string("env_model_file", "game_kuhn_poker_players_5_hidden_layer_64_buffer_{}_lr_0.05_train_epoch_{}_batch_size_128.pkl", "location of env model")
 flags.DEFINE_integer("replay_buffer", 20000, "env model replay buffer")
 flags.DEFINE_integer("train_epoch", 5000, "env model replay buffer")
@@ -115,8 +113,12 @@ def main(argv):
     # set seed
     setup_seed(FLAGS.seed)
 
-    # load game
+    # load liar's dice game
+    # game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players, "numdice": FLAGS.numdice, "dice_sides": 6})
+    # load poker game
     game = pyspiel.load_game(FLAGS.game_name, {"players": FLAGS.n_players})
+    # load phantom ttt game
+    # game = pyspiel.load_game(FLAGS.game_name, {"obstype": "reveal-nothing"})
     state = game.new_initial_state()
     chance_action = len(state.chance_outcomes())
     num_actions = max(game.num_distinct_actions(), chance_action)
