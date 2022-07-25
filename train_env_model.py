@@ -96,9 +96,9 @@ def sample_mix_offline_data(proportion):
 
 
 def data_to_tensor(replay_buffer):
-    train_x = torch.tensor(replay_buffer["info_state"]).to(FLAGS.device)
-    train_action = torch.tensor(replay_buffer["action"]).to(FLAGS.device)
-    train_y = torch.tensor(replay_buffer["next_info_state"]).to(FLAGS.device)
+    train_x = torch.FloatTensor(replay_buffer["info_state"]).to(FLAGS.device)
+    train_action = torch.FloatTensor(replay_buffer["action"]).to(FLAGS.device)
+    train_y = torch.FloatTensor(replay_buffer["next_info_state"]).to(FLAGS.device)
     return train_x, train_action, train_y
 
 
