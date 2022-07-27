@@ -49,7 +49,7 @@ class RLOracle(optimization_oracle.AbstractOracle):
         time_step = self._env.reset()
         cumulative_rewards = 0.0
         step = 0
-        while not time_step.last() or step > self.game_length:
+        while not time_step.last():
             player_id = time_step.observations["current_player"]
             agent_output = agents[player_id].step(time_step, is_evaluation=is_evaluation)
             action_list = [agent_output.action]
